@@ -1,6 +1,4 @@
-public void main(String[] args) {
-    int n = 10000000;
-
+public int Ulam(int n){
     while (n != 1) {
         if (n % 2 == 0) {
             n = n / 2;
@@ -9,5 +7,13 @@ public void main(String[] args) {
         }
         System.out.println(n);
     }
+    return n;
+}
+
+
+public void main(String[] args) {
+    int n = 10000000; //Specify n for testing Ulam method
+    System.out.println("Your n: " + n + " is now after ULAM: " + Ulam(n));
+
 }
 
