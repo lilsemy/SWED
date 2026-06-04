@@ -19,7 +19,7 @@ public class WebsiteMonitorController {
     }
 
     public WebsiteMonitor createSub(String url, int frequency, PreferredCommunicationChannel prefComChannel, User user){
-        WebsiteMonitor webMon = new WebsiteMonitor(url, frequency, prefComChannel, user, WebsiteMonitorID++, this);
+        WebsiteMonitor webMon = new WebsiteMonitor(url, frequency, prefComChannel, user, WebsiteMonitorID++);
         activeMonitors.add(webMon);
         return webMon;
     }

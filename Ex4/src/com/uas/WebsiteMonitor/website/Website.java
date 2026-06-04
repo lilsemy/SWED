@@ -5,6 +5,10 @@ public class Website {
     private String data;
     private boolean isUpdated;
 
+    public Website(String url) {
+        this.url = url;
+    }
+
     public String getUrl() {return url;}
 
     public boolean checkForUpdate(){

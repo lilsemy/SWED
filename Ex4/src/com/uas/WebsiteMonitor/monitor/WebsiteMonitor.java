@@ -1,28 +1,30 @@
 package com.uas.WebsiteMonitor.monitor;
 
-import com.uas.WebsiteMonitor.Controller.WebsiteMonitorController;
 import com.uas.WebsiteMonitor.User.User;
 import com.uas.WebsiteMonitor.util.Notification;
+import com.uas.WebsiteMonitor.util.ObserverInt;
 import com.uas.WebsiteMonitor.util.PreferredCommunicationChannel;
 import com.uas.WebsiteMonitor.website.Website;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public class WebsiteMonitor {
+public class WebsiteMonitor implements  WebsiteMonitorInt {
     private LocalDateTime lastChecked;
     private int frequency;
     private PreferredCommunicationChannel prefCommChannel;
     private User user;
     private int id;
     private Website website;
-    private final WebsiteMonitorController controller;
+    private List<ObserverInt> observers = new ArrayList<>();
 
-    public WebsiteMonitor(String url, int frequency, PreferredCommunicationChannel prefCommChannel, User user, int id, WebsiteMonitorController controller) {
+    public WebsiteMonitor(String url, int frequency, PreferredCommunicationChannel prefCommChannel, User user, int id) {
         this.frequency = frequency;
         this.prefCommChannel = prefCommChannel;
         this.user = user;
         this.id = id;
         this.lastChecked = null;
-        this.controller = new WebsiteMonitorController();
+        this.website = new Website(url);
     }
 
     public String getUrl() {
@@ -42,7 +44,7 @@ public class WebsiteMonitor {
         if(website.checkForUpdate()){
             String data = website.getData();
             Notification notification = createNotfication(data);
-
+            this.notify(notification);
         }
     }
 
@@ -54,6 +56,22 @@ public class WebsiteMonitor {
         }
         else {
             throw new IllegalArgumentException("The Frequency and the PreferredCommunicationChannel have already given values!");
+        }
+    }
+
+    public void attach(ObserverInt obs){
+        if (!observers.contains(obs)){
+            observers.add(obs);
+        }
+    }
+
+    public void detach(ObserverInt obs){
+        observers.remove(obs);
+    }
+
+    public void notify(Notification notification) {
+        for (ObserverInt obs : observers) {
+            obs.update(notification);
         }
     }
 }
