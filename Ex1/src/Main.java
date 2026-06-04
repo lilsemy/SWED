@@ -7,12 +7,13 @@ public int Ulam(int n){
         }
         System.out.println(n);
     }
+    System.out.println("Finishing up ULAM!");
     return n;
 }
 
 
 public void main(String[] args) {
-    int n = 10000000; //Specify n for testing Ulam method
+    int n = 100000; //Specify n for testing Ulam method
     System.out.println("Your n: " + n + " is now after ULAM: " + Ulam(n));
 
 }

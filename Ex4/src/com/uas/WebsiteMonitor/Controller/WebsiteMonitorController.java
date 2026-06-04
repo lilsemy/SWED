@@ -24,11 +24,6 @@ public class WebsiteMonitorController {
         return webMon;
     }
 
-    public void informUser(Notification notification, User user){
-        user.getNotification(notification);
-    }
-
-
     //Neue Funktion: So that User can get their Montors in form of an URL List (could be used on GUI to select one and to enable editing and deleting)
     public List<String> getUserUrl(User user){
         List<String> urls = new ArrayList<String>();
