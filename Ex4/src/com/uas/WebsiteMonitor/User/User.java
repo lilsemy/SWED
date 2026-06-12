@@ -1,6 +1,7 @@
 package com.uas.WebsiteMonitor.User;
 
 import com.uas.WebsiteMonitor.Controller.WebsiteMonitorController;
+import com.uas.WebsiteMonitor.comparisonStrategy.Comparison;
 import com.uas.WebsiteMonitor.monitor.WebsiteMonitor;
 import com.uas.WebsiteMonitor.util.Notification;
 import com.uas.WebsiteMonitor.util.ObserverInt;
@@ -20,8 +21,8 @@ public class User implements ObserverInt {
         getNotification(notification);
     }
 
-    public void requestNewSub(String url, int frequency, PreferredCommunicationChannel prefComChannel){
-        WebsiteMonitor mon = controller.createSub(url, frequency, prefComChannel, this);
+    public void requestNewSub(String url, int frequency, PreferredCommunicationChannel prefComChannel, Comparison comparison){
+        WebsiteMonitor mon = controller.createSub(url, frequency, prefComChannel, comparison, this);
         mon.attach(this);
     }
 

@@ -1,6 +1,7 @@
 package com.uas.WebsiteMonitor.Controller;
 
 import com.uas.WebsiteMonitor.User.User;
+import com.uas.WebsiteMonitor.comparisonStrategy.Comparison;
 import com.uas.WebsiteMonitor.monitor.*;
 import com.uas.WebsiteMonitor.util.Notification;
 import com.uas.WebsiteMonitor.util.PreferredCommunicationChannel;
@@ -18,8 +19,8 @@ public class WebsiteMonitorController {
         }
     }
 
-    public WebsiteMonitor createSub(String url, int frequency, PreferredCommunicationChannel prefComChannel, User user){
-        WebsiteMonitor webMon = new WebsiteMonitor(url, frequency, prefComChannel, user, WebsiteMonitorID++);
+    public WebsiteMonitor createSub(String url, int frequency, PreferredCommunicationChannel prefComChannel, Comparison comparison, User user){
+        WebsiteMonitor webMon = new WebsiteMonitor(url, frequency, prefComChannel, comparison, user, WebsiteMonitorID++);
         activeMonitors.add(webMon);
         return webMon;
     }
@@ -35,10 +36,10 @@ public class WebsiteMonitorController {
         return urls;
     }
 
-    public void editSub(String url, int newFreq, PreferredCommunicationChannel newPrefCom, User user){
+    public void editSub(String url, int newFreq, PreferredCommunicationChannel newPrefCom, Comparison newComparison, User user){
         for (WebsiteMonitor monitor : activeMonitors){
             if((monitor.getUrl() == url) && (monitor.getUser() == user)) {
-                monitor.editSettings(newFreq, newPrefCom);
+                monitor.editSettings(newFreq, newPrefCom, newComparison);
             }
         }
     }

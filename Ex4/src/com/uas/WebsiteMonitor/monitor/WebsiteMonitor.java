@@ -1,6 +1,7 @@
 package com.uas.WebsiteMonitor.monitor;
 
 import com.uas.WebsiteMonitor.User.User;
+import com.uas.WebsiteMonitor.comparisonStrategy.Comparison;
 import com.uas.WebsiteMonitor.util.Notification;
 import com.uas.WebsiteMonitor.util.ObserverInt;
 import com.uas.WebsiteMonitor.util.PreferredCommunicationChannel;
@@ -17,14 +18,18 @@ public class WebsiteMonitor implements  WebsiteMonitorInt {
     private int id;
     private Website website;
     private List<ObserverInt> observers = new ArrayList<>();
+    private String oldData;
+    private Comparison comparison;
 
-    public WebsiteMonitor(String url, int frequency, PreferredCommunicationChannel prefCommChannel, User user, int id) {
+    public WebsiteMonitor(String url, int frequency, PreferredCommunicationChannel prefCommChannel, Comparison comparison, User user, int id) {
         this.frequency = frequency;
         this.prefCommChannel = prefCommChannel;
         this.user = user;
         this.id = id;
         this.lastChecked = null;
         this.website = new Website(url);
+        this.oldData = website.getData();
+        this.comparison = comparison;
     }
 
     public String getUrl() {
@@ -42,17 +47,22 @@ public class WebsiteMonitor implements  WebsiteMonitorInt {
 
     public void checkForUpdate(){
         if(website.checkForUpdate()){
-            String data = website.getData();
-            Notification notification = createNotfication(data);
-            this.notify(notification);
+            String currentData = website.getData();
+            if (comparison.hasChanged(oldData, currentData)){
+                Notification notification = createNotfication(currentData);
+                this.notify(notification);
+                oldData = currentData;
+            }
         }
     }
 
-    public void editSettings(int newFreq, PreferredCommunicationChannel newPrefComChannel){
+    public void editSettings(int newFreq, PreferredCommunicationChannel newPrefComChannel, Comparison newComparison){
         if (newFreq != 0){
             this.frequency = newFreq;
         } else if (newPrefComChannel != null){
             this.prefCommChannel = newPrefComChannel;
+        } else if (newComparison != null){
+            this.comparison = newComparison;
         }
         else {
             throw new IllegalArgumentException("The Frequency and the PreferredCommunicationChannel have already given values!");
