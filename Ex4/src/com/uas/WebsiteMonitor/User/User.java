@@ -26,8 +26,8 @@ public class User implements ObserverInt {
         mon.attach(this);
     }
 
-    public void manageSubs(String url, int newFreq, PreferredCommunicationChannel newPrefComChannel){
-        controller.editSub(url, newFreq, newPrefComChannel, this);
+    public void manageSubs(String url, int newFreq, PreferredCommunicationChannel newPrefComChannel, Comparison newComparison){
+        controller.editSub(url, newFreq, newPrefComChannel, newComparison, this);
     }
 
     public void getNotification(Notification notification){
