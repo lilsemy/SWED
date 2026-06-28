@@ -30,6 +30,7 @@ public class WebsiteMonitor implements  WebsiteMonitorInt {
         this.website = new Website(url);
         this.oldData = website.getData();
         this.comparison = comparison;
+        System.out.println("WebsiteMonitor created with URL: " + url);
     }
 
     public String getUrl() {

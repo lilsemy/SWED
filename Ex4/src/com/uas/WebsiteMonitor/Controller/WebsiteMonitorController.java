@@ -13,6 +13,10 @@ public class WebsiteMonitorController {
     private List<WebsiteMonitor> activeMonitors;
     private int WebsiteMonitorID = 0;
 
+    public WebsiteMonitorController() {
+        this.activeMonitors = new ArrayList<>();
+    }
+
     public void triggerUpdateCheck(){
         for (WebsiteMonitor monitor : activeMonitors){
             monitor.checkForUpdate();
