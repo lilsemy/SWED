@@ -58,7 +58,7 @@ public class WebsiteMonitor implements  WebsiteMonitorInt {
     }
 
     public void editSettings(int newFreq, PreferredCommunicationChannel newPrefComChannel, Comparison newComparison){
-        if (newFreq != 0){
+        if (newFreq > 0){
             this.frequency = newFreq;
         } else if (newPrefComChannel != null){
             this.prefCommChannel = newPrefComChannel;

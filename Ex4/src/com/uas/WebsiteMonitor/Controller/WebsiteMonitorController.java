@@ -41,10 +41,15 @@ public class WebsiteMonitorController {
     }
 
     public void editSub(String url, int newFreq, PreferredCommunicationChannel newPrefCom, Comparison newComparison, User user){
+        boolean urlFound = false;
         for (WebsiteMonitor monitor : activeMonitors){
             if((monitor.getUrl() == url) && (monitor.getUser() == user)) {
                 monitor.editSettings(newFreq, newPrefCom, newComparison);
+                urlFound = true;
             }
+        }
+        if (!urlFound) {
+            throw new IllegalArgumentException("No Monitor found for this URL");
         }
     }
 
